@@ -73,7 +73,7 @@ window.onload = function(){
     var OutputTens = document.getElementById("tens");
     var buttonStart = document.getElementById("btn-start");
     var buttonReset = document.getElementById("btn-reset");
-    /*var countStop = document.getElementById("btn-stop");*/
+    var countStop = document.getElementById("btn-stop");
     var Interval;
 
     buttonStart.addEventListener('click', () => {
@@ -81,17 +81,13 @@ window.onload = function(){
         Interval = setInterval(startTimer, 10);  // millisecond 10 = 0.01 second
     });
 
-    function countStop() {
-        if(f);
-    };
+    countStop.addEventListener('click', () => {
+        clearInterval(Interval);
+    });
 
-buttonReset.addEventListener('click', () => {
-   clearInterval(Interval);
-    tens = "00";
-    seconds = "00";
-    OutputSeconds.innerHTML = seconds;
-    OutputTens.innerHTML = tens;
-});
+    buttonReset.addEventListener('click', () => {
+    location.reload();
+    });
 
     function startTimer(){
         tens++;
