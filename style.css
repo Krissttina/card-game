@@ -103,6 +103,32 @@ transform: translateX(8px);
     transform: rotateY(180deg);
 }
 
+#timer{
+    font-size: 20px;
+}
+
+button{
+    width: 80px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 3px;
+    outline: none;
+    background: rgb(255, 255, 255);
+    color: #8c4e9b;
+    cursor: pointer;
+    border-color: #8c4e9b;
+}
+
+button:hover{
+    color: #fff;
+    background: #8c4e9b;
+}
+
+button::after{
+    width: 90px;
+    height: 50px;
+}
+
 /*
 @media screen and (max-width: 700px) {
     .cards{ 
