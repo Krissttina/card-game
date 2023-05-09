@@ -7,8 +7,12 @@
     <script src="https://kit.fontawesome.com/420ba10640.js" crossorigin="anonymous"></script>
 	<title>Card Game</title>
 </head>
-<body> 
-    <div class="wrapper">
+<body>
+    <section class="container" hidden>
+        <h2>Try this game out!</h2>
+        <button id="playBtn">Play</button>
+    </section>
+    <section class="wrapper" >
         <ul class="cards">
             <li class="card">
              <div class="view front-view">
@@ -106,15 +110,11 @@
                    <img src="images/img-4.png" alt="card-img">
             </div>
         </li>
-        <div id="timer">
+        <section id="timer">
             <p id="time">Time: <span id="second">00</span>:<span id="tens">00</span> sec</p>
-        </div>
-        <div>
-            <button id="btn-start">Start</button>
-            <button id="btn-stop">Stop</button>
+        </section>
             <button id="btn-reset">Reset</button>
-        </div>
-    </div>      
-<script src="script.js"></script>
+    </section>      
+    <script src="scr.js"></script>
 </body>
 </html>

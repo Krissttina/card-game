@@ -1,15 +1,43 @@
+//start section
+const gameBody = document.querySelector(".wrapper");
+const startBody = document.querySelector(".container");
+
+document.getElementById("playBtn").addEventListener("click", () => {
+  startBody.style.display = "none";
+  gameBody.style.display = "block";
+});
+
+//
 const cards = document.querySelectorAll(".card");
+
+  //reset button
+  const buttonReset = document.getElementById("btn-reset");
+  buttonReset.addEventListener("click", () => {
+
+    cards.forEach((card) => {
+      card.classList.remove("flip"); //will make all cards turn back down
+    });
+    //cards.classList.remove("flip");
+    //cardTwo.classList.remove("flip");
+
+    shuffleCard();
+    startTimer();
+  });
 
 let matched = 0;
 let cardOne, cardTwo;
 let disableDeck = false;
 
-function flipCard({ target: clickedCard }) {
+function flipCard(e) {
+  let clickedCard = e.target;
+
   if (cardOne !== clickedCard && !disableDeck) {
     clickedCard.classList.add("flip");
+
     if (!cardOne) {
       return (cardOne = clickedCard);
     }
+
     cardTwo = clickedCard;
     disableDeck = true;
     let cardOneImg = cardOne.querySelector(".back-view img").src,
@@ -24,7 +52,7 @@ function matchCards(img1, img2) {
     if (matched == 8) {
       setTimeout(() => {
         return shuffleCard();
-      }, 1000);
+      }, 200);
     }
     cardOne.removeEventListener("click", flipCard);
     cardTwo.removeEventListener("click", flipCard);
@@ -34,14 +62,14 @@ function matchCards(img1, img2) {
   setTimeout(() => {
     cardOne.classList.add("shake");
     cardTwo.classList.add("shake");
-  }, 400);
+  }, 200);
 
   setTimeout(() => {
     cardOne.classList.remove("shake", "flip");
     cardTwo.classList.remove("shake", "flip");
     cardOne = cardTwo = "";
     disableDeck = false;
-  }, 1200);
+  }, 600); //time to flip cards
 }
 
 function shuffleCard() {
@@ -64,48 +92,31 @@ cards.forEach((card) => {
   card.addEventListener("click", flipCard);
 });
 
-window.onload = function () {
-  var seconds = 00;
-  var tens = 00;
-  var OutputSeconds = document.getElementById("second");
-  var OutputTens = document.getElementById("tens");
-  var buttonStart = document.getElementById("btn-start");
-  var buttonReset = document.getElementById("btn-reset");
-  var countStop = document.getElementById("btn-stop");
-  var Interval;
-
-  buttonStart.addEventListener("click", () => {
-    clearInterval(Interval);
-    Interval = setInterval(startTimer, 10); // millisecond 10 = 0.01 second
-  });
-
-  countStop.addEventListener("click", () => {
-    clearInterval(Interval);
-  });
-
-  buttonReset.addEventListener("click", () => {
-    location.reload();
-  });
-
-  function startTimer() {
-    tens++;
-    if (tens <= 9) {
-      OutputTens.innerHTML = "0" + tens;
-    }
-
-    if (tens > 9) {
-      OutputTens.innerHTML = tens;
-    }
-
-    if (tens > 99) {
-      seconds++;
-      OutputSeconds.innerHTML = "0" + seconds;
-      tens = 0;
-      OutputTens.innerHTML = "0" + 0;
-    }
-
-    if (seconds > 9) {
-      OutputSeconds.innerHTML = seconds;
-    }
+//timer function
+function startTimer() {
+  let seconds = 00;
+  let tens = 00;
+  const outputSeconds = document.getElementById("second");
+  const outputTens = document.getElementById("tens");
+  tens++;
+  if (tens <= 9) {
+    outputTens.innerHTML = "0" + tens;
   }
-};
+
+  if (tens > 9) {
+    outputTens.innerHTML = tens;
+  }
+
+  if (tens > 99) {
+    seconds++;
+    outputSeconds.innerHTML = "0" + seconds;
+    tens = 0;
+    outputTens.innerHTML = "0" + 0;
+  }
+
+  if (seconds > 9) {
+    outputSeconds.innerHTML = seconds;
+  }
+}
+
+startTimer();
