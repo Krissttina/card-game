@@ -8,11 +8,11 @@
 	<title>Card Game</title>
 </head>
 <body>
-    <section class="container" hidden>
+    <section class="container" >
         <h2>Try this game out!</h2>
         <button id="playBtn">Play</button>
     </section>
-    <section class="wrapper" >
+    <section class="wrapper" hidden>
         <ul class="cards">
             <li class="card">
              <div class="view front-view">
@@ -110,11 +110,12 @@
                    <img src="images/img-4.png" alt="card-img">
             </div>
         </li>
-        <section id="timer">
-            <p id="time">Time: <span id="second">00</span>:<span id="tens">00</span> sec</p>
-        </section>
-            <button id="btn-reset">Reset</button>
+        
+        <p id="timer">Time: 00:00</p>
+        <p id="moves">Moves: 0</p>
+        <button id="resetBtn">Reset</button> 
+      
     </section>      
-    <script src="scr.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

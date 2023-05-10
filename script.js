@@ -1,21 +1,86 @@
+//start section
+const gameBody = document.querySelector(".wrapper");
+const startBody = document.querySelector(".container");
+
+let interval = null;
+
+document.getElementById("playBtn").addEventListener("click", () => {
+  startBody.style.display = "none";
+  gameBody.style.display = "block";
+
+  interval = setInterval(startTimer, 1000);
+});
+
 const cards = document.querySelectorAll(".card");
+
+//reset button
+const buttonReset = document.getElementById("resetBtn");
+buttonReset.addEventListener("click", () => {
+  cards.forEach((card) => {
+    card.classList.remove("flip"); //will make all cards turn back down
+  });
+  //restart moves
+  move = 0;
+  moves.innerHTML = `Moves: 0`;
+
+  //shuffle cards
+  shuffleCard();
+
+  //reset timer
+  seconds = 0;
+  mins = 0;
+  timer.innerHTML = `Time: ${minValue}:${secValue}`;
+  interval = setInterval(startTimer, 1000);
+});
+
+const timer = document.getElementById("timer");
+const moves = document.getElementById("moves");
+
+let seconds = 0;
+let mins = 0;
+
+let move = 0;
+
+//timer function
+function startTimer() {
+  seconds++; //not working
+
+  if (seconds >= 60) {
+    mins++;
+    seconds = 0;
+  }
+
+  let secValue = seconds < 10 ? `0${seconds}` : seconds;
+  let minValue = mins < 10 ? `0${mins}` : mins;
+  timer.innerHTML = `Time: ${minValue}:${secValue}`;
+}
+
+const movesCount = () => {
+  move++;
+  moves.innerHTML = `Moves: ${move}`;
+};
 
 let matched = 0;
 let cardOne, cardTwo;
 let disableDeck = false;
 
-function flipCard({ target: clickedCard }) {
+function flipCard(e) {
+  let clickedCard = e.target;
+
   if (cardOne !== clickedCard && !disableDeck) {
     clickedCard.classList.add("flip");
+
     if (!cardOne) {
       return (cardOne = clickedCard);
     }
+
     cardTwo = clickedCard;
     disableDeck = true;
     let cardOneImg = cardOne.querySelector(".back-view img").src,
       cardTwoImg = cardTwo.querySelector(".back-view img").src;
     matchCards(cardOneImg, cardTwoImg);
   }
+  movesCount(); //calling to increase moves count
 }
 
 function matchCards(img1, img2) {
@@ -24,7 +89,7 @@ function matchCards(img1, img2) {
     if (matched == 8) {
       setTimeout(() => {
         return shuffleCard();
-      }, 1000);
+      }, 200);
     }
     cardOne.removeEventListener("click", flipCard);
     cardTwo.removeEventListener("click", flipCard);
@@ -34,14 +99,14 @@ function matchCards(img1, img2) {
   setTimeout(() => {
     cardOne.classList.add("shake");
     cardTwo.classList.add("shake");
-  }, 400);
+  }, 200);
 
   setTimeout(() => {
     cardOne.classList.remove("shake", "flip");
     cardTwo.classList.remove("shake", "flip");
     cardOne = cardTwo = "";
     disableDeck = false;
-  }, 1200);
+  }, 600); //time to flip cards
 }
 
 function shuffleCard() {
@@ -64,48 +129,4 @@ cards.forEach((card) => {
   card.addEventListener("click", flipCard);
 });
 
-window.onload = function () {
-  var seconds = 00;
-  var tens = 00;
-  var OutputSeconds = document.getElementById("second");
-  var OutputTens = document.getElementById("tens");
-  var buttonStart = document.getElementById("btn-start");
-  var buttonReset = document.getElementById("btn-reset");
-  var countStop = document.getElementById("btn-stop");
-  var Interval;
-
-  buttonStart.addEventListener("click", () => {
-    clearInterval(Interval);
-    Interval = setInterval(startTimer, 10); // millisecond 10 = 0.01 second
-  });
-
-  countStop.addEventListener("click", () => {
-    clearInterval(Interval);
-  });
-
-  buttonReset.addEventListener("click", () => {
-    location.reload();
-  });
-
-  function startTimer() {
-    tens++;
-    if (tens <= 9) {
-      OutputTens.innerHTML = "0" + tens;
-    }
-
-    if (tens > 9) {
-      OutputTens.innerHTML = tens;
-    }
-
-    if (tens > 99) {
-      seconds++;
-      OutputSeconds.innerHTML = "0" + seconds;
-      tens = 0;
-      OutputTens.innerHTML = "0" + 0;
-    }
-
-    if (seconds > 9) {
-      OutputSeconds.innerHTML = seconds;
-    }
-  }
-};
+//startTimer();
