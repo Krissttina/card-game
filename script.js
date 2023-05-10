@@ -17,7 +17,7 @@ const cards = document.querySelectorAll(".card");
 const buttonReset = document.getElementById("resetBtn");
 buttonReset.addEventListener("click", () => {
   cards.forEach((card) => {
-    card.classList.remove("flip"); //will make all cards turn back down
+    card.classList.remove("flip"); //will make all cards flip back
   });
   //restart moves
   move = 0;
@@ -43,7 +43,7 @@ let move = 0;
 
 //timer function
 function startTimer() {
-  seconds++; //not working
+  seconds++;
 
   if (seconds >= 60) {
     mins++;
@@ -53,6 +53,13 @@ function startTimer() {
   let secValue = seconds < 10 ? `0${seconds}` : seconds;
   let minValue = mins < 10 ? `0${mins}` : mins;
   timer.innerHTML = `Time: ${minValue}:${secValue}`;
+
+  //timer has to stop if every card is fliped
+  if (cards.classList == "flip") {//not working
+    console.log("enterd");
+    clearInterval(interval);
+    interval = null;
+  }
 }
 
 const movesCount = () => {
@@ -80,6 +87,7 @@ function flipCard(e) {
       cardTwoImg = cardTwo.querySelector(".back-view img").src;
     matchCards(cardOneImg, cardTwoImg);
   }
+  
   movesCount(); //calling to increase moves count
 }
 
@@ -128,5 +136,3 @@ shuffleCard();
 cards.forEach((card) => {
   card.addEventListener("click", flipCard);
 });
-
-//startTimer();
